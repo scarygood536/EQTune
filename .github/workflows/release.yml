@@ -10,7 +10,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    # Build-Release.ps1 uses the Visual Studio 2022 generator; windows-latest now ships VS 2026 only.
+    runs-on: windows-2022
     steps:
       - name: Check out source
         uses: actions/checkout@v4
