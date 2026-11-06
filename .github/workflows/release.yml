@@ -1,0 +1,39 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [Release]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build, test, and package
+        shell: powershell
+        run: .\Build-Release.ps1
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EqTune-VST3-win-x64
+          path: release/EqTune-VST3-win-x64.zip
+
+      - name: Publish latest release
+        if: github.ref == 'refs/heads/Release'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag --yes 2>$null
+          gh release create latest "release/EqTune-VST3-win-x64.zip" `
+            --title "EqTune VST3 (latest build)" `
+            --notes "Download **EqTune-VST3-win-x64.zip**, extract it completely, then double-click **Install-EqTune.cmd**. See the README for setup in Wave Link 3." `
+            --latest
+          if ($LASTEXITCODE -ne 0) { throw "Failed to create the GitHub release." }

@@ -8,7 +8,7 @@ Wave Link still uses its own audio driver/routing. EqTune itself installs no dri
 
 ## Install and use
 
-1. Extract **EqTune-VST3-win-x64.zip** completely. Close Wave Link before installing.
+1. Download **EqTune-VST3-win-x64.zip** from the [latest release](https://github.com/scarygood536/EQTune/releases/latest) and extract it completely. Close Wave Link before installing. The source code alone cannot be installed; the release ZIP contains the compiled `EqTune.vst3` bundle, built automatically by GitHub Actions on every push to `Release`.
 2. Double-click **Install-EqTune.cmd** and approve administrator access. The installer copies only `EqTune.vst3` to `C:\Program Files\Common Files\VST3`.
 3. Open Wave Link 3. Rescan VST3 plugins in its audio-effects/plugin settings if EqTune is not listed.
 4. On your existing game channel, add **EqTune** as an audio effect and open its editor.
